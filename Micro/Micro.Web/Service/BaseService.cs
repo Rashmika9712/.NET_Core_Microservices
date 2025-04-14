@@ -1,8 +1,8 @@
 ﻿using Micro.Web.Models;
 using Micro.Web.Service.IService;
+using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using System.Text.Json;
 using static Micro.Web.Utility.SD;
 
 namespace Micro.Web.Service
@@ -28,7 +28,7 @@ namespace Micro.Web.Service
                 message.RequestUri = new Uri(requestDto.Url);
                 if (requestDto.Data != null)
                 {
-                    message.Content = new StringContent(JsonSerializer.Serialize(requestDto.Data), Encoding.UTF8, "application/json");
+                    message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
                 }
 
                 HttpResponseMessage? apiResponse = null;
@@ -63,7 +63,7 @@ namespace Micro.Web.Service
                         return new() { IsSuccess = false, Message = "Internal Server Error" };
                     default:
                         var apiContent = await apiResponse.Content.ReadAsStringAsync();
-                        var apiResponseDto = JsonSerializer.Deserialize<ResponseDto>(apiContent);
+                        var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
                         return apiResponseDto;
                 }
             }
