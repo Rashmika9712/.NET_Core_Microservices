@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Services.CouponAPI", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web", "Micro.Web\Micro.Web.csproj", "{5CC107D3-5BF3-4622-8565-7B612595B43D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Services.AuthAPI", "Micro.Services.AuthAPI\Micro.Services.AuthAPI.csproj", "{5869DAA5-D007-4442-B245-0912F96A8BA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{5CC107D3-5BF3-4622-8565-7B612595B43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CC107D3-5BF3-4622-8565-7B612595B43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CC107D3-5BF3-4622-8565-7B612595B43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5869DAA5-D007-4442-B245-0912F96A8BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5869DAA5-D007-4442-B245-0912F96A8BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5869DAA5-D007-4442-B245-0912F96A8BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5869DAA5-D007-4442-B245-0912F96A8BA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E2C9C91E-D92E-46AE-8AF1-14CE99572791} = {02E5B4A7-5CBF-4F27-A330-73E76CC6EF7D}
 		{5CC107D3-5BF3-4622-8565-7B612595B43D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5869DAA5-D007-4442-B245-0912F96A8BA5} = {02E5B4A7-5CBF-4F27-A330-73E76CC6EF7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38C18C95-F8FE-4D08-BF95-4DB645E4D6C7}
