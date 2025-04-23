@@ -1,0 +1,68 @@
+﻿using Micro.Service.AuthAPI.Service.IService;
+using Micro.Services.AuthAPI.Data;
+using Micro.Services.AuthAPI.Models;
+using Micro.Services.AuthAPI.Models.Dto;
+using Microsoft.AspNetCore.Identity;
+
+namespace Micro.Services.AuthAPI.Service
+{
+    public class AuthService : IAuthService
+    {
+        private readonly AppDbContext _db;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AuthService(
+            AppDbContext db,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager
+            )
+        {
+            _db = db;
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
+        {
+            ApplicationUser user = new()
+            {
+                UserName = registrationRequestDto.Email,
+                Email = registrationRequestDto.Email,
+                NormalizedEmail = registrationRequestDto.Email.ToUpper(),
+                Name = registrationRequestDto.Name,
+                PhoneNumber = registrationRequestDto.PhoneNumber,
+            };
+
+            try
+            {
+                var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
+                if (result.Succeeded)
+                {
+                    //var userToReturn = _db.ApplicationUsers.FirstOrDefault(u => u.UserName == registrationRequestDto.Email);
+                    //UserDto userDto = new()
+                    //{
+                    //    ID = userToReturn.Id,
+                    //    Email = userToReturn.Email,
+                    //    Name = userToReturn.Name,
+                    //    PhoneNumber = userToReturn.PhoneNumber
+                    //};
+
+                    return string.Empty;
+                }
+                else
+                    return result.Errors.FirstOrDefault().Description;
+
+            }
+            catch (Exception)
+            {
+                
+            }
+            return "Error Encountered";
+        }
+    }
+}
