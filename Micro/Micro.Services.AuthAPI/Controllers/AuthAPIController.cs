@@ -44,7 +44,7 @@ namespace Micro.Services.AuthAPI.Controllers
             return Ok(_response);
         }
 
-        [HttpPost("AssignRole")]
+        [HttpPost("assignRole")]
         public async Task<ActionResult> AssignRole([FromBody] RegistrationRequestDto model)
         {
             var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
