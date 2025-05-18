@@ -9,11 +9,11 @@ namespace Micro.Services.AuthAPI.Controllers
     public class AuthAPIController : ControllerBase
     {
         private readonly IAuthService _authService;
-        protected ResponseDto _responseDto;
+        protected ResponseDto _response;
         public AuthAPIController(IAuthService authService)
         {
             _authService = authService;
-            _responseDto = new ResponseDto();
+            _response = new ResponseDto();
         }
 
         [HttpPost("register")]
@@ -22,11 +22,11 @@ namespace Micro.Services.AuthAPI.Controllers
             var errorMessage = await _authService.Register(model);
             if(!string.IsNullOrEmpty(errorMessage))
             {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = errorMessage;
-                return BadRequest(_responseDto);
+                _response.IsSuccess = false;
+                _response.Message = errorMessage;
+                return BadRequest(_response);
             }
-            return Ok(_responseDto);
+            return Ok(_response);
         }
 
         [HttpPost("login")]
@@ -35,13 +35,27 @@ namespace Micro.Services.AuthAPI.Controllers
             var loginResponse = await _authService.Login(model);
             if(loginResponse.User == null)
             {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = "Username or password is incorrect";
-                return BadRequest(_responseDto);
+                _response.IsSuccess = false;
+                _response.Message = "Username or password is incorrect";
+                return BadRequest(_response);
             }
 
-            _responseDto.Result = loginResponse;
-            return Ok(_responseDto);
+            _response.Result = loginResponse;
+            return Ok(_response);
+        }
+
+        [HttpPost("AssignRole")]
+        public async Task<ActionResult> AssignRole([FromBody] RegistrationRequestDto model)
+        {
+            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+            if (!assignRoleSuccessful)
+            {
+                _response.IsSuccess = false;
+                _response.Message = "Error encountered";
+                return BadRequest(_response);
+            }
+
+            return Ok(_response);
         }
     }
 }
