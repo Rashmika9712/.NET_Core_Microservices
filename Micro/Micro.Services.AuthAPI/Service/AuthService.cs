@@ -2,6 +2,7 @@
 using Micro.Services.AuthAPI.Data;
 using Micro.Services.AuthAPI.Models;
 using Micro.Services.AuthAPI.Models.Dto;
+using Micro.Services.AuthAPI.Service.IService;
 using Microsoft.AspNetCore.Identity;
 
 namespace Micro.Services.AuthAPI.Service
@@ -11,15 +12,19 @@ namespace Micro.Services.AuthAPI.Service
         private readonly AppDbContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+
         public AuthService(
             AppDbContext db,
             RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IJwtTokenGenerator jwtTokenGenerator
             )
         {
             _db = db;
             _roleManager = roleManager;
             _userManager = userManager;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
 
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
@@ -34,6 +39,7 @@ namespace Micro.Services.AuthAPI.Service
             }
 
             // Generate Token
+            var token = _jwtTokenGenerator.GenerateToken(user);
 
             UserDto userDto = new()
             {
@@ -46,7 +52,7 @@ namespace Micro.Services.AuthAPI.Service
             LoginResponseDto loginResponseDto = new()
             {
                 User = userDto,
-                Token = string.Empty // Token will be generated here
+                Token = token
             };
 
             return loginResponseDto;
